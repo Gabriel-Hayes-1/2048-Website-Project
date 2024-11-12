@@ -1,0 +1,58 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+#game-container {
+    background-color: #bbbbbb;
+    padding: 25px;
+    border-radius: 15%;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4x4 grid */
+    gap: 10px;
+}
+
+#game-container div {
+    background-color: #dddddd;
+    border-radius: 20%; 
+    width: 100px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 400%; 
+    color: #222222;
+    font-family: Arial, sans-serif;
+    cursor: default;
+}
+#debug {
+    width: 5%;
+}
+#restartbutton {
+    border-width: 0px;
+    cursor: pointer;
+    border-radius: 5px;
+    height: 5%;
+    width: 10%;
+    font-family: system-ui, 'Segoe UI', sans-serif;
+    font-size: 100%;
+    background-color: #555555;
+}
+#restartbutton:hover {
+    background-color: #aaaaaa;
+}
+.tile-blank { background-color: #dddddd;}
+.tile-2 { background-color: #eee4da !important;}
+.tile-4 { background-color: #ede0c8 !important; }
+.tile-8 { background-color: #f2b179!important; }
+.tile-16 { background-color: #f59563 !important; }
+.tile-32 { background-color: #f67c5f !important; }
+.tile-64 { background-color: #f65e3b !important; }
+.tile-128 { background-color: #edcf72 !important; }
+.tile-256 { background-color: #edcc61 !important; }
+.tile-512 { background-color: #edc850 !important; }
+.tile-1024 { background-color: #edc53f !important; }
+.tile-2048 { background-color: #edc22e !important; }
