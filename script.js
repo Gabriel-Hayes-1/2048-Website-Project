@@ -44,6 +44,11 @@ function addBgColor(value, id) {
     return outputname
 }
 
+function printTable() {
+    document.getElementById("table").innerHTML = JSON.stringify(occupiedTiles)
+    console.log(`Table: ${JSON.stringify(occupiedTiles)}`);
+
+}
 
 function RandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -138,11 +143,13 @@ function spawnBlock() {
 
 
 
-
-
-
-
-
+/*
+STRUCTURE OF GAME:
+1  2  3  4 
+5  6  7  8 
+9  10 11 12
+13 14 15 16
+*/
 
 function arrowRight() {
     let anyTileMoved = false;
@@ -154,27 +161,26 @@ function arrowRight() {
         let newPosition = null;
         let row = Math.floor((tileId - 1) / 4);
         let rightmost = row * 4 + 4;
+        
 
-        for (let pos = rightmost; pos > row * 4; pos--) {
-             //start at the rightmost position
-             if (pos === tileId) {
-                newPosition = pos;
+        for (let pos = tileId; pos <= row * 4+4; pos++) {
+             //start at the tile position, check right 
+             if (pos == rightmost) {
+                newPosition = rightmost;
                 break;
             }
             
-            if (!occupiedTiles.includes(pos)) {
+            if (occupiedTiles.includes(pos+1)) { //if next tile is full 
                 newPosition = pos;
-                break;
-            } else {
-                if (document.getElementById(pos).innerText === document.getElementById(tileId).innerText) {
-                    newPosition = pos;
+                debug(`pos: ${pos}, includes?: ${occupiedTiles.includes(pos+1)}`)
+                if (document.getElementById(pos+1).innerText === document.getElementById(tileId).innerText) {
+                    newPosition = pos+1;
                     newTileNum *=2
-                    break;
                 }
+            break;
             }
         }
 
-        
 
 
         if (newPosition !== tileId) {
@@ -338,8 +344,8 @@ document.addEventListener('keydown', function(event) {
             if (tileMovedUp) {
                 spawnBlock();
             }
-            console.log(`Table: ${JSON.stringify(occupiedTiles)}`);
-        break;
+            printTable();
+            break;
 
 
         case "ArrowDown":
@@ -347,7 +353,7 @@ document.addEventListener('keydown', function(event) {
         if (tileMovedDown) {
             spawnBlock();
         }
-        console.log(`Table: ${JSON.stringify(occupiedTiles)}`);
+        printTable()
         break;
 
 
@@ -356,7 +362,7 @@ document.addEventListener('keydown', function(event) {
        		if (tileMovedLeft) {
            		spawnBlock();
         	}
-			console.log(`Table: ${JSON.stringify(occupiedTiles)}`);
+			printTable()
         break;
 
 
@@ -365,7 +371,7 @@ document.addEventListener('keydown', function(event) {
         if (tileMovedRight) {
             spawnBlock();
         }
-        console.log(`Table: ${JSON.stringify(occupiedTiles)}`);
+        printTable()
         break;
 
         case "`":
@@ -381,9 +387,10 @@ function refreshboard() {
     for (let i = 1; i <= 16; i++) {
         clearTile(i)
     }
+    debug("")
     console.log("-------NEW GAME--------")
     spawnStartingBlocks()
-    console.log(`Table: ${JSON.stringify(occupiedTiles)}`);
+    printTable()
 }
 
 

@@ -1,5 +1,6 @@
 body {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 100vh;
@@ -29,7 +30,15 @@ body {
     cursor: default;
 }
 #debug {
-    width: 5%;
+    width: 450px;
+    text-align: center;
+}
+#table {
+    padding: 0%;
+}
+h2 {
+    padding: 0%;
+    margin: 0%;
 }
 #restartbutton {
     border-width: 0px;
