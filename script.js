@@ -163,7 +163,7 @@ function arrowRight() {
         let rightmost = row * 4 + 4;
         
 
-        for (let pos = tileId; pos <= row * 4+4; pos++) {
+        for (let pos = tileId; ; pos++) {
              //start at the tile position, check right 
              if (pos == rightmost) {
                 newPosition = rightmost;
@@ -204,29 +204,27 @@ function arrowUp() {
     let anyTileMoved = false;
 
     occupiedTiles.forEach((tileId, index) => {
+
         let newPosition = null
         let newTileNum = parseInt(document.getElementById(tileId).innerText, 10); //what to set the destination tile to
-
-
         let column = (tileId - 1) % 4 + 1;
         let topmost = column;
-        for (let pos = topmost; pos <= tileId; pos += 4) {
-            if (pos === tileId) {
-                newPosition = pos;
+
+        for (let pos = tileId; ; pos -= 4) {
+
+            if (pos === topmost) {
+                newPosition = topmost;
                 break;
             }
             
-            if (!occupiedTiles.includes(pos)) {
+            if (occupiedTiles.includes(pos-4)) {
                 newPosition = pos;
-                break;
-            } else {
-                if (document.getElementById(pos).innerText === document.getElementById(tileId).innerText) {
-                    newPosition = pos;
+                if (document.getElementById(pos-4).innerText === document.getElementById(tileId).innerText) {
+                    newPosition = pos-4;
                     newTileNum *=2
-                    break;
                 }
-            }
-            
+                break;
+            } 
         }
 
         if (newPosition !== tileId) {
@@ -256,22 +254,21 @@ function arrowDown() {
 
         let column = (tileId - 1) % 4 + 1;
         let bottommost = 12 + column;
-        for (let pos = bottommost; pos >= column; pos -= 4) {
-            if (pos === tileId) {
-                newPosition = pos;
+
+        for (let pos = tileId; ; pos += 4) {
+
+            if (pos === bottommost) {
+                newPosition = bottommost;
                 break;
             }
-            
-            if (!occupiedTiles.includes(pos)) {
+            if (occupiedTiles.includes(pos+4)) {
                 newPosition = pos;
-                break;
-            } else {
-                if (document.getElementById(pos).innerText === document.getElementById(tileId).innerText) {
-                    newPosition = pos;
+                if (document.getElementById(pos+4).innerText === document.getElementById(tileId).innerText) {
+                    newPosition = pos+4;
                     newTileNum *=2
-                    break;
                 }
-            }
+                break;
+            } 
         }
             
 
@@ -302,23 +299,24 @@ function arrowLeft() {
 
         let row = Math.floor((tileId-1) / 4);
         let leftmost = row * 4 + 1 ;
-        for (let pos = leftmost; pos <= row * 4 + 4; pos++) {    
-            if (pos === tileId) {
-                newPosition = pos;
-                break;
-            }
-            
-            if (!occupiedTiles.includes(pos)) {
-                newPosition = pos;
-                break;
-            } else {
-                if (document.getElementById(pos).innerText === document.getElementById(tileId).innerText) {
-                    newPosition = pos;
-                    newTileNum *=2
-                    break;
-                }
-            }
-        }
+
+        for (let pos = tileId; ; pos--) {
+            //start at the tile position, check left 
+            if (pos == leftmost) {
+               newPosition = leftmost;
+               break;
+           }
+           
+           if (occupiedTiles.includes(pos-1)) { //if next tile is full 
+               newPosition = pos;
+               debug(`pos: ${pos}, includes?: ${occupiedTiles.includes(pos-1)}`)
+               if (document.getElementById(pos-1).innerText === document.getElementById(tileId).innerText) {
+                   newPosition = pos-1;
+                   newTileNum *=2
+               }
+           break;
+           }
+       }
 
 
         if (newPosition !== tileId) {
