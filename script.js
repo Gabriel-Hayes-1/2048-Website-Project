@@ -153,7 +153,7 @@ STRUCTURE OF GAME:
 
 function arrowRight() {
     let anyTileMoved = false;
-    occupiedTiles.sort((a, b) => b - a);
+    occupiedTiles.sort((a, b) => b - a); //sort greatest to least
 
     occupiedTiles.forEach((tileId,index) => {
         let newTileNum = parseInt(document.getElementById(tileId).innerText, 10);
@@ -202,7 +202,8 @@ function arrowRight() {
 
 function arrowUp() {
     let anyTileMoved = false;
-
+    occupiedTiles.sort((a, b) => a - b);
+    
     occupiedTiles.forEach((tileId, index) => {
 
         let newPosition = null
@@ -246,7 +247,7 @@ function arrowUp() {
 
 function arrowDown() {
     let anyTileMoved = false;
-
+    occupiedTiles.sort((a, b) => b - a);
     occupiedTiles.forEach((tileId, index) => {
         let newPosition = null
         let newTileNum = parseInt(document.getElementById(tileId).innerText, 10);
@@ -290,7 +291,7 @@ function arrowDown() {
 
 function arrowLeft() {
     let anyTileMoved = false;
-    occupiedTiles.sort((a, b) => a - b);
+    occupiedTiles.sort((a, b) => a - b); //sort least to greatest
 
     occupiedTiles.forEach((tileId,index) => {
         let newPosition = null;
