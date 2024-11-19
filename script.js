@@ -172,7 +172,6 @@ function arrowRight() {
             
             if (occupiedTiles.includes(pos+1)) { //if next tile is full 
                 newPosition = pos;
-                debug(`pos: ${pos}, includes?: ${occupiedTiles.includes(pos+1)}`)
                 if (document.getElementById(pos+1).innerText === document.getElementById(tileId).innerText) {
                     newPosition = pos+1;
                     newTileNum *=2
@@ -203,7 +202,7 @@ function arrowRight() {
 function arrowUp() {
     let anyTileMoved = false;
     occupiedTiles.sort((a, b) => a - b);
-    
+
     occupiedTiles.forEach((tileId, index) => {
 
         let newPosition = null
@@ -310,7 +309,6 @@ function arrowLeft() {
            
            if (occupiedTiles.includes(pos-1)) { //if next tile is full 
                newPosition = pos;
-               debug(`pos: ${pos}, includes?: ${occupiedTiles.includes(pos-1)}`)
                if (document.getElementById(pos-1).innerText === document.getElementById(tileId).innerText) {
                    newPosition = pos-1;
                    newTileNum *=2
@@ -343,7 +341,6 @@ document.addEventListener('keydown', function(event) {
             if (tileMovedUp) {
                 spawnBlock();
             }
-            printTable();
             break;
 
 
@@ -352,7 +349,6 @@ document.addEventListener('keydown', function(event) {
         if (tileMovedDown) {
             spawnBlock();
         }
-        printTable()
         break;
 
 
@@ -361,7 +357,6 @@ document.addEventListener('keydown', function(event) {
        		if (tileMovedLeft) {
            		spawnBlock();
         	}
-			printTable()
         break;
 
 
@@ -370,7 +365,6 @@ document.addEventListener('keydown', function(event) {
         if (tileMovedRight) {
             spawnBlock();
         }
-        printTable()
         break;
 
         case "`":
@@ -389,7 +383,6 @@ function refreshboard() {
     debug("")
     console.log("-------NEW GAME--------")
     spawnStartingBlocks()
-    printTable()
 }
 
 
