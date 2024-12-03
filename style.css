@@ -15,6 +15,23 @@ body {
     grid-template-columns: repeat(4, 1fr); /* 4x4 grid */
     gap: 10px;
 }
+@keyframes death-fadein {
+    from {background-color: rgba(0, 0, 0, 0);;}
+    to {background-color: rgba(0, 0, 0, 0.5);}
+  }
+.death-anim {
+    animation-name: death-fadein;
+    animation-duration: 4s;
+    animation-fill-mode: forwards;
+}
+#death-warning {
+    background-color: rgba(0, 0, 0, 0);
+    padding: 25px;
+    border-radius: 15%;
+    position: absolute;
+    width: 430px;
+    height: 430px;
+}
 
 #game-container div {
     background-color: #dddddd;
@@ -33,9 +50,7 @@ body {
     width: 450px;
     text-align: center;
 }
-#table {
-    padding: 0%;
-}
+
 h2 {
     padding: 0%;
     margin: 0%;

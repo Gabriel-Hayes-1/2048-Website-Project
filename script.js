@@ -20,7 +20,7 @@ Score
 Format buttons & things above and below game, instead of on top
 
 */
-
+var runGame = true
 
 function addBgColor(value, id) {
     let num = null
@@ -151,7 +151,7 @@ STRUCTURE OF GAME:
 13 14 15 16
 */
 
-function arrowRight() {
+function arrowRight(changeBoard) {
     let anyTileMoved = false;
     occupiedTiles.sort((a, b) => b - a); //sort greatest to least
 
@@ -184,14 +184,15 @@ function arrowRight() {
 
         if (newPosition !== tileId) {
             anyTileMoved = true;  // Indicate that at least one tile moved
-            if (occupiedTiles.indexOf(newPosition) != -1) {
-                console.log(`${newPosition} is occupied`)
+            if (occupiedTiles.indexOf(newPosition) != -1 && changeBoard == true) { //if next tile exsists and we're changing the board
                 removeFirstOccurrence(occupiedTiles, newPosition)
             }
         }
 
-        clearTile(tileId);
-        addTile(newPosition, newTileNum, index)
+        if (changeBoard == true) {
+            clearTile(tileId);
+            addTile(newPosition,newTileNum, index)
+        }
     });
 
 
@@ -199,7 +200,7 @@ function arrowRight() {
 }
 
 
-function arrowUp() {
+function arrowUp(changeBoard) {
     let anyTileMoved = false;
     occupiedTiles.sort((a, b) => a - b);
 
@@ -229,22 +230,23 @@ function arrowUp() {
 
         if (newPosition !== tileId) {
             anyTileMoved = true; 
-            if (occupiedTiles.indexOf(newPosition) != -1) {
-                console.log(`${newPosition} is occupied`)
+            if (occupiedTiles.indexOf(newPosition) != -1 && changeBoard == true) { //if next tile exsists and we're changing the board
                 removeFirstOccurrence(occupiedTiles, newPosition)
             }
         }
         
 
 
-        clearTile(tileId);
-        addTile(newPosition, newTileNum, index)
+        if (changeBoard == true) {
+            clearTile(tileId);
+            addTile(newPosition,newTileNum, index)
+        }
     });
 
     return anyTileMoved;
 }
 
-function arrowDown() {
+function arrowDown(changeBoard) {
     let anyTileMoved = false;
     occupiedTiles.sort((a, b) => b - a);
     occupiedTiles.forEach((tileId, index) => {
@@ -275,20 +277,22 @@ function arrowDown() {
 
         if (newPosition !== tileId) {
             anyTileMoved = true; 
-            if (occupiedTiles.indexOf(newPosition) != -1) {
+            if (occupiedTiles.indexOf(newPosition) != -1 && changeBoard == true) { //if next tile exsists and we're changing the board
                 removeFirstOccurrence(occupiedTiles, newPosition)
             }
         }
 
 
-        clearTile(tileId);
-        addTile(newPosition,newTileNum, index)
+        if (changeBoard == true) {
+            clearTile(tileId);
+            addTile(newPosition,newTileNum, index)
+        }
     });
 
     return anyTileMoved;
 }
 
-function arrowLeft() {
+function arrowLeft(changeBoard) {
     let anyTileMoved = false;
     occupiedTiles.sort((a, b) => a - b); //sort least to greatest
 
@@ -318,14 +322,17 @@ function arrowLeft() {
        }
 
 
-        if (newPosition !== tileId) {
+        if (newPosition !== tileId) { //if tile is moving
             anyTileMoved = true; 
-            if (occupiedTiles.indexOf(newPosition) != -1) {
+            if (occupiedTiles.indexOf(newPosition) != -1 && changeBoard == true) { //if next tile exsists and we're changing the board
                 removeFirstOccurrence(occupiedTiles, newPosition)
             }
         }
-        clearTile(tileId);
-        addTile(newPosition,newTileNum, index)
+        if (changeBoard == true) {
+            clearTile(tileId);
+            addTile(newPosition,newTileNum, index)
+        }
+        
 
 
     });
@@ -335,43 +342,50 @@ function arrowLeft() {
 
 
 document.addEventListener('keydown', function(event) {
-    switch(event.key) {
-        case "ArrowUp":
-            let tileMovedUp = arrowUp();
-            if (tileMovedUp) {
+    if (runGame == true) {
+        switch(event.key) {
+            case "ArrowUp":
+                let tileMovedUp = arrowUp(true);
+                if (tileMovedUp) {
+                    spawnBlock();
+                }
+                checkLoss()
+                break;
+    
+    
+            case "ArrowDown":
+            let tileMovedDown = arrowDown(true);
+            if (tileMovedDown) {
                 spawnBlock();
             }
+            checkLoss()
             break;
-
-
-        case "ArrowDown":
-        let tileMovedDown = arrowDown();
-        if (tileMovedDown) {
-            spawnBlock();
+    
+    
+            case "ArrowLeft":
+                let tileMovedLeft = arrowLeft(true);
+                   if (tileMovedLeft) {
+                       spawnBlock();
+                }
+                checkLoss()
+            break;
+    
+    
+            case "ArrowRight":
+            let tileMovedRight = arrowRight(true);
+            if (tileMovedRight) {
+                spawnBlock();
+            }
+            checkLoss()
+            break;
+    
+            case "`":
+            checkLoss
+            
+            break;
         }
-        break;
-
-
-        case "ArrowLeft":
-            let tileMovedLeft = arrowLeft();
-       		if (tileMovedLeft) {
-           		spawnBlock();
-        	}
-        break;
-
-
-        case "ArrowRight":
-        let tileMovedRight = arrowRight();
-        if (tileMovedRight) {
-            spawnBlock();
-        }
-        break;
-
-        case "`":
-        console.log(numToClassName(452))
-        
-        break;
     }
+    
 
 
 });
@@ -383,6 +397,24 @@ function refreshboard() {
     debug("")
     console.log("-------NEW GAME--------")
     spawnStartingBlocks()
+    document.getElementById("death-warning").classList.remove("death-anim")
+    runGame = true
 }
 
+function checkLoss() {
+
+    if (occupiedTiles.length >= 16) {
+        let left = arrowLeft(false)
+        let up = arrowUp(false)
+        let right = arrowRight(false)
+        let down = arrowDown(false)
+
+        if (down == false && left ==false&&up==false&&right==false) {
+            document.getElementById("death-warning").classList.add("death-anim")
+            runGame = false
+        }
+    
+    }    
+
+}
 
