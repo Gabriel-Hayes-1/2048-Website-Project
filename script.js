@@ -404,12 +404,9 @@ function refreshboard() {
 function checkLoss() {
 
     if (occupiedTiles.length >= 16) {
-        let left = arrowLeft(false)
-        let up = arrowUp(false)
-        let right = arrowRight(false)
-        let down = arrowDown(false)
+        
 
-        if (down == false && left ==false&&up==false&&right==false) {
+        if (arrowDown(false)==false&&arrowLeft(false)==false&&arrowUp(false)==false&&arrowRight(false)==false) {
             document.getElementById("death-warning").classList.add("death-anim")
             runGame = false
         }
