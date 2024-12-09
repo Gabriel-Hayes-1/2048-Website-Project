@@ -1,0 +1,1 @@
+My version of the decently popular game "2048". To control the game, use the arrow keys. Press r or the restart button to restart. The goal of the game is to merge tiles until you reach a tile with the number 2048.
